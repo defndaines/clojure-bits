@@ -41,3 +41,9 @@
            (divisible? n i) false
            (< sqrt-n i)     true
            :else            (recur (+ i 2)))))))
+
+(defn factorial
+ [n]
+ (loop [cnt n acc 1]
+  (if (zero? cnt) acc
+      (recur (dec cnt) (* acc cnt)))))
