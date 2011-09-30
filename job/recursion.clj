@@ -81,4 +81,14 @@
 
 (defn subsets
  [coll]
- (reduce concat (for [n (range (inc (count x)))] (combinations x n))))
+ (reduce concat (for [n (range (inc (count coll)))] (combinations coll n))))
+
+; 8.4 Write a method to compute all permutations of a string.
+;; (join coll) is doing (apply str coll)
+(defn rm-from-str
+ [word c]
+ (apply str
+  (loop [mot word acc '[]]
+   (cond (empty? mot) acc
+         (= c (first mot)) (concat acc (rest mot))
+         :else (recur (rest mot) (conj acc (first mot)))))))
