@@ -36,14 +36,14 @@
   (or (= n 2) (= n 3)) true
   (even? n) false
   :else (let [sqrt-n (Math/sqrt n)]
-         (loop [i 3]
-          (cond
-           (divisible? n i) false
-           (< sqrt-n i)     true
-           :else            (recur (+ i 2)))))))
+    (loop [i 3]
+     (cond
+      (divisible? n i) false
+      (< sqrt-n i)     true
+      :else            (recur (+ i 2)))))))
 
 (defn factorial
  [n]
  (loop [cnt n acc 1]
   (if (zero? cnt) acc
-      (recur (dec cnt) (* acc cnt)))))
+   (recur (dec cnt) (* acc cnt)))))
