@@ -8,9 +8,9 @@
 
 (defn lowest-number-by-digits
   "Returns the lowest number with x digits."
+  ;; 1 returns 1.0, because cubing off 0 isn't particularly valuable.
   [x]
-  (if (= 1 x) 1
-    (Math/pow 10 (dec x))))
+  (Math/pow 10 (dec x)))
 
 (defn next-cube
   "Returns the next integer with a cube greater than or equal to the provided value."
@@ -57,10 +57,3 @@
       (if (seq candidates)
         (apply min candidates)
         (recur (inc n))))))
-
-;; Potential optimizations:
-;; * Start the "n" value in the solver at a higher value.
-;;     With 1, clocks in at about 80 msecs right now on my laptop, and can cut
-;;     nearly in half by seeding with 12.
-;; * Inlining everything might be faster, but I wanted to break things up to be
-;;     cleaner to read.
