@@ -1,5 +1,4 @@
-(ns euler-062.core
-  (:require [clojure.math.combinatorics :as combo]))
+(ns euler-062.core)
 
 ;; The cube, 41063625 (345^3), can be permuted to produce two other cubes:
 ;; 56623104 (384^3) and 66430125 (405^3). In fact, 41063625 is the smallest cube
@@ -7,32 +6,61 @@
 ;; Find the smallest cube for which exactly five permutations of its digits are
 ;; cube.
 
-(defn cube [x]
-  (* x x x))
+(defn lowest-number-by-digits
+  "Returns the lowest number with x digits."
+  [x]
+  (if (= 1 x) 1
+    (Math/pow 10 (dec x))))
 
-(defn digits-in [x]
+(defn next-cube
+  "Returns the next integer with a cube greater than or equal to the provided value."
+  ;; Attempting to cube any values returned by x > 19 will fail.
+  [x]
+  (long (Math/ceil (Math/cbrt x))))
+
+(defn digits-in
+  "Returns the number of digits in the value provided."
+  [x]
   (count (seq (str x))))
 
-(defn cubes [x]
+(defn cube [x]
+  ;; Would need to use *' to handle values > 2097151.
+  (* x x x))
+
+(defn cubes
+  "Lazy sequence of cubes, starting with the cube of x."
+  [x]
   (cons (cube x)
         (lazy-seq (cubes (inc x)))))
 
-(defn lowest-number-by-digits [n]
-  (Long/parseLong (apply str (cons \1 (repeat (dec n) \0)))))
+(defn cubes-by-digits
+  "Returns a sequence of all cubes with x digits."
+  [x]
+  (take-while #(= x (digits-in %))
+              (cubes (next-cube (lowest-number-by-digits x)))))
 
-(defn cubes-by-digits [n]
-  (take-while #(= n (digits-in %)) (cubes (long (Math/ceil (Math/cbrt (lowest-number-by-digits n)))))))
+(defn find-candidates
+  "Find candidate values from numbers in s where permutations contain exactly x cubes."
+  [x s]
+  (flatten (map second
+                ;; Only keep those which contain the desired number of elements.
+                (filter #(= x (count (second %)))
+                        ;; Group all cubes by their sorted character sequences.
+                        (group-by #(apply str (sort (seq (str %)))) s)))))
 
-(def ten-digits (cubes-by-digits 10))
- 
-(defn permutations-of [x]
-  (into #{} (map #(Long/parseLong (apply str %)) (combo/permutations (seq (str x))))))
+(defn euler-062
+  "Find the smallest cube for which exactly x permutations of its digits are also cubes."
+  [x]
+  (loop [n 1]
+    (let [n-cubes (cubes-by-digits n)
+          candidates (find-candidates x n-cubes)]
+      (if (seq candidates)
+        (apply min candidates)
+        (recur (inc n))))))
 
-;; So this returns the example answer.
-(filter (permutations-of (first eight-digits)) eight-digits)
-
-(defn smallest-cube-with-permutations [n s]
-  (if (seq s)
-    (if (= n (count (filter (permutations-of (first s)) s)))
-      (first s)
-      (recur n (rest s)))))
+;; Potential optimizations:
+;; * Start the "n" value in the solver at a higher value.
+;;     With 1, clocks in at about 80 msecs right now on my laptop, and can cut
+;;     nearly in half by seeding with 12.
+;; * Inlining everything might be faster, but I wanted to break things up to be
+;;     cleaner to read.
