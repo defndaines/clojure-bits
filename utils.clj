@@ -38,3 +38,14 @@
                       rec-name (clojure.string/replace-first k #".*->" "")]
                   [(symbol (str ns "." rec-name)) (var-get v)]))]
     (into {} (map splat records))))
+
+(defn transpose
+  "Transpose a two-dimensional collection.
+  (apply mapv vector coll) does not work if the last element is shorter."
+  [coll]
+  (loop [acc []
+         c coll]
+    (if (seq (first c))
+      (recur (conj acc (for [row c] (first row)))
+             (map rest c))
+      acc))
