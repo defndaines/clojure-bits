@@ -1,6 +1,6 @@
 # Little Clojurer
 
-This is code I write in Clojure, converting *The Little LISPer* code. (I was
+This is code I wrote in Clojure, converting *The Little LISPer* code. (I was
 working from a friend's copy of the original book.) The latest version of the
 book is [The Little Schemer](https://mitpress.mit.edu/books/little-schemer).
 
