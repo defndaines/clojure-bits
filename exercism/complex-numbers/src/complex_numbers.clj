@@ -1,4 +1,6 @@
-(ns complex-numbers)
+(ns complex-numbers
+  "A complex number is a number in the form a + b * i where a and b are real
+  and i satisfies i^2 = -1.")
 
 (defn real [[a _]] a)
 

@@ -1,6 +1,9 @@
 (ns sublist)
 
 (defn- sublist?
+  "Given a `smaller` and `larger` list (it is up to the caller to determine
+  this beforehand), determine if the smaller list is a sublist of the larger
+  one."
   [smaller larger]
   (let [n (count smaller)]
     (if (> n (count larger))

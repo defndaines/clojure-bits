@@ -1,4 +1,6 @@
-(ns sum-of-multiples)
+(ns sum-of-multiples
+  "Given a number, find the sum of all the unique multiples of particular
+  numbers up to but not including that number.")
 
 (def whole? (complement ratio?))
 

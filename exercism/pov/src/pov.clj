@@ -1,4 +1,7 @@
-(ns pov)
+(ns pov
+  "Point of View.
+
+  Reparent a graph on a selected node.")
 
 (defn ^:private node-name [tree]
   (when (sequential? tree)

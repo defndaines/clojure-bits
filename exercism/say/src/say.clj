@@ -1,4 +1,7 @@
-(ns say)
+(ns say
+  "Given a number from 0 to 999,999,999,999, spell out that number in
+  English.")
+
 
 (def words
   {1 "one" 2 "two" 3 "three" 4 "four" 5 "five" 6 "six" 7 "seven" 9 "nine"

@@ -1,4 +1,13 @@
-(ns atbash-cipher)
+(ns atbash-cipher
+  "Create an implementation of the atbash cipher, an ancient encryption system
+  created in the Middle East.
+
+  The Atbash cipher is a simple substitution cipher that relies on transposing
+  all the letters in the alphabet such that the resulting alphabet is
+  backwards. The first letter is replaced with the last letter, the second
+  with the second-last, and so on.
+
+  See http://en.wikipedia.org/wiki/Atbash")
 
 (def alphabet (map char (range (int \a) (inc (int \z)))))
 

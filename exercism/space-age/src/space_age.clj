@@ -1,4 +1,6 @@
-(ns space-age)
+(ns space-age
+  "Given an age in seconds, calculate how old someone would be on a given
+  planet.")
 
 (def periods {"on-mercury" 0.2408467
               "on-venus" 0.61519726

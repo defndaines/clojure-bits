@@ -1,4 +1,6 @@
-(ns binary)
+(ns binary
+  "Convert a binary number, represented as a string (e.g., '101010'), to its
+  decimal equivalent using first principles.")
 
 (defn to-decimal [s]
   (first

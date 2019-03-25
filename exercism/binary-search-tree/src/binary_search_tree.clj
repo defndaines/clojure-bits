@@ -1,4 +1,5 @@
-(ns binary-search-tree)
+(ns binary-search-tree
+  "Insert and search for numbers in a binary tree.")
 
 (defn singleton [v]
   {:value v})

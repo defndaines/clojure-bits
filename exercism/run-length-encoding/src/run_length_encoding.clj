@@ -1,6 +1,12 @@
-(ns run-length-encoding)
+(ns run-length-encoding
+  "Implement run-length encoding and decoding.
+
+  Run-length encoding (RLE) is a simple form of data compression, where runs
+  (consecutive data elements) are replaced by just one data value and count.
+  https://en.wikipedia.org/wiki/Run-length_encoding")
 
 (defn- encode
+  "RLE encoding recuding function."
   [acc e]
   (let [n (count e)
         ch (first e)]

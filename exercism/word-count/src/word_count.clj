@@ -1,9 +1,10 @@
 (ns word-count
-  (:require [clojure.string :as str]))
+  "Given a phrase, count the occurrences of each word in that phrase."
+  (:require [clojure.string :as string]))
 
 (defn word-count [s]
   (-> s
       .toLowerCase
-      (str/replace #"[^a-z0-9]" " ")
-      (str/split #"\s+")
+      (string/replace #"[^a-z0-9]" " ")
+      (string/split #"\s+")
       frequencies))

@@ -1,4 +1,6 @@
-(ns wordy)
+(ns wordy
+  "Parse and evaluate simple math word problems returning the answer as an
+  integer.")
 
 (def ops #" *(plus|minus|multiplied by|divided by) *")
 
