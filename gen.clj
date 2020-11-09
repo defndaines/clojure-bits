@@ -36,3 +36,11 @@
 (def gen-date-time-2
   (gen/fmap construct-date-time
             gen-date-time-components))
+
+;; Generate width first, then use bind to generate
+;; a collection of vectors with the same width.
+(gen/let [width gen/nat
+          rows (gen/vector
+                 (gen/vector gen/large-integer
+                             width))]
+  rows)
