@@ -2,7 +2,10 @@
   "--- Day 5: Binary Boarding ---
   ...
   As a sanity check, look through your list of boarding passes. What is the
-  highest seat ID on a boarding pass?"
+  highest seat ID on a boarding pass?
+  --- Part Two ---
+  ...
+  What is the ID of your seat?"
   (:require [clojure.string :as string]))
 
 (defn seat-id

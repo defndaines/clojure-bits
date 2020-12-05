@@ -15,3 +15,12 @@
 (deftest highest-seat-id-test
   (testing "find highest seat ID in input."
     (is (= 855 (reduce max (map day-5/seat-id input))))))
+
+(deftest your-seat-test
+  (testing "find your seat, where the seats next to it will exist."
+    (is (= 552
+           (->> input
+                (map day-5/seat-id)
+                sort
+                (reduce (fn [acc e] (if (= (+ 1 acc) e) e acc)))
+                inc)))))
