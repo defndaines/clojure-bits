@@ -19,5 +19,10 @@
 
 (deftest value-before-loop-test
   (testing "accumulator value before code enters infinite loop."
-    (is (= 5 (day-8/value-before-loop sample-data)))
-    (is (= 2025 (day-8/value-before-loop input)))))
+    (is (= 5 (second (day-8/run-prog sample-data))))
+    (is (= 2025 (second (day-8/run-prog input))))))
+
+(deftest find-terminating-prog-test
+  (testing "finding the accumulator on a version of the program which terminates."
+    (is (= 8 (day-8/find-terminating-prog sample-data)))
+    (is (= 2001 (day-8/find-terminating-prog input)))))
