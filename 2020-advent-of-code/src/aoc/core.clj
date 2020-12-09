@@ -7,4 +7,4 @@
   (->> filename
        slurp
        string/split-lines
-       (map #(Integer/parseInt %))))
+       (map #(Long/parseLong %))))
