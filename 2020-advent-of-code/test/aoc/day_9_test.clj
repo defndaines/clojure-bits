@@ -27,3 +27,8 @@
   (testing "find the first invalid number in sequence."
     (is (= 127 (day-9/find-invalid sample-data 5)))
     (is (= 1721308972 (day-9/find-invalid input 25)))))
+
+(deftest find-xmas-weakness-test
+  (testing "find encryption weakness from sequence."
+    (is (= 62 (day-9/find-xmas-weakness sample-data 127)))
+    (is (= 209694133 (day-9/find-xmas-weakness input 1721308972)))))

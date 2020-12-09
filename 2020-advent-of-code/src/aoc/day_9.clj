@@ -1,7 +1,10 @@
 (ns aoc.day-9
   "--- Day 9: Encoding Error ---
   ...
-  What is the first number that does not have this property?")
+  What is the first number that does not have this property?
+  --- Part Two ---
+  ...
+  What is the encryption weakness in your XMAS-encrypted list of numbers?")
 
 (defn- valid-numbers
   [nums]
@@ -33,3 +36,16 @@
         (recur (conj (vec (rest preamble)) n)
                (rest r))
         n))))
+
+(defn find-xmas-weakness
+  [nums n]
+  (let [invalid n
+        bust (inc invalid)]
+    (loop [l nums]
+      (let [sum (atom 0)
+            s (take-while (fn [i] (swap! sum + i) (< @sum bust)) l)
+            total (reduce + s)]
+        (if (= invalid total)
+          (let [sorted (sort s)]
+            (+ (first sorted) (last sorted)))
+          (recur (rest l)))))))
