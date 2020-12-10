@@ -18,5 +18,11 @@
     (is (= 22 (get (day-10/diff-counts larger-sample) 1)))
     (is (= 10 (get (day-10/diff-counts larger-sample) 3)))
     (is (= 75 (get (day-10/diff-counts input) 1)))
-    (is (= 33 (get (day-10/diff-counts input) 3)))
+    (is (= 33 (get (day-10/diff-counts input) 3)))))
+
+(deftest distinct-arrangments-test
+  (testing "number of distinct arrangments of a set of adapters."
+    (is (= 8 (day-10/distinct-arrangments sample-data)))
+    (is (= 19208 (day-10/distinct-arrangments larger-sample)))
+    ; (is (= 19208 (day-10/distinct-arrangments input)))
     ))
