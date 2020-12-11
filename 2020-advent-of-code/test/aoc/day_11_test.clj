@@ -95,3 +95,30 @@
   (testing "how many seats are occupied."
     (is (= 37 (day-11/occupied after-fifth-round)))
     (is (= 2412 (day-11/occupied (day-11/stabilize input))))))
+
+(deftest in-view-test
+  (testing "when seats exist in all directions."
+    (is (= [[2 1] [4 2] [7 0] [1 3] [8 3] [0 7] [4 8] [5 4]]
+           (day-11/in-view [".......#."
+                            "...#....."
+                            ".#......."
+                            "........."
+                            "..#L....#"
+                            "....#...."
+                            "........."
+                            "#........"
+                            "...#....."] [4 3]))))
+  (testing "when only one seat is in view."
+      (is (= [[1 3]]
+           (day-11/in-view ["............."
+                            ".L.L.#.#.#.#."
+                            "............."] [1 1]))))
+  (testing "when no seats are in view."
+    (is (= []
+           (day-11/in-view [".##.##."
+                            "#.#.#.#"
+                            "##...##"
+                            "...L..."
+                            "##...##"
+                            "#.#.#.#"
+                            ".##.##."] [3 3])))))
