@@ -24,5 +24,4 @@
   (testing "number of distinct arrangments of a set of adapters."
     (is (= 8 (day-10/distinct-arrangments sample-data)))
     (is (= 19208 (day-10/distinct-arrangments larger-sample)))
-    ; (is (= 19208 (day-10/distinct-arrangments input)))
-    ))
+    (is (= 442136281481216 (day-10/distinct-arrangments input)))))

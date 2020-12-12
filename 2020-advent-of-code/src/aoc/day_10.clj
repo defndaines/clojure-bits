@@ -32,21 +32,35 @@
     (fn [[a b]] (< (- b a) 4))
     (partition 2 1 (sort s))))
 
+(defn- arrangements
+  [s]
+  (if (< 2 (count s))
+    (let [sorted (sort s)
+          required #{(first sorted) (last sorted)}
+          candidates (butlast (rest sorted))]
+      (apply
+        +
+        (map count
+             (conj
+               (for [n (range 2 (inc (count candidates)))]
+                 (filter valid-arrangement?
+                         (map #(concat % required)
+                              (combo/combinations candidates n))))
+               (filter valid-arrangement?
+                       (map #(sort (conj required %))
+                            candidates))
+               (filter valid-arrangement? [required])))))
+    1))
+
 (defn distinct-arrangments
   [s]
-  (let [required (reduce (fn [acc e]
-                           (if (= -3 (apply - e))
-                             (conj (conj acc (first e)) (last e))
-                             acc))
-                         #{0} ; Outlet is always required.
-                         (partition 2 1 (full-set s)))
-        candidates (set/difference (set s) required)
-        just-ones (filter valid-arrangement? (map #(conj required %) candidates))
-        arrangements (for [n (range 2 (count candidates))]
-                         (filter valid-arrangement?
-                                 (map #(concat % required)
-                                      (combo/combinations candidates n))))]
-    (+ 1 ; The full set is always valid.
-       (if (valid-arrangement? required) 1 0) ; Skip all "optional" values.
-       (count just-ones) ; Combo library doesn't accept combinations of 1.
-       (apply + (map count arrangements)))))
+  (let [sorted (vec (sort (conj s 0)))
+        full (conj sorted (+ 3 (last sorted)))]
+    (loop [acc 1
+           batch []
+           l full]
+      (let [[a b] l]
+        (cond
+          (nil? b) acc
+          (= (+ 3 a) b) (recur (* acc (arrangements (conj batch a b))) [] (rest l))
+          :else (recur acc (conj batch a) (rest l)))))))
