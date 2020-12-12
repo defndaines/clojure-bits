@@ -25,7 +25,7 @@
     (is (= 25 (day-12/manhattan-distance [17 -8])))
     (is (= 759 (day-12/manhattan-distance [71 -688])))
     (is (= 286 (day-12/manhattan-distance [214 -72])))
-    (is (= 282837 (day-12/manhattan-distance [-185710 97127])))))
+    (is (= 45763 (day-12/manhattan-distance [24120 21643])))))
 
 (def starting-waypoint [10 1])
 
@@ -43,5 +43,5 @@
            (day-12/waypoint-move [[170 38] [4 -10]] "F11")))
     (is (= [[214 -72] [4 -10]]
            (reduce day-12/waypoint-move [[0 0] starting-waypoint] sample-data)))
-    (is (= [[-185710 97127] [-30 12]]
+    (is (= [[24120 21643] [44 -2]]
            (reduce day-12/waypoint-move [[0 0] starting-waypoint] input)))))

@@ -44,17 +44,13 @@
       "F" (forward dir x y v))))
 
 (defn rotate-waypoint
-  [orient degrees wx wy]
-  (let [r (/ degrees 90)
-        rot (if (= :ccw orient)
-              (cycle [[1 1] [-1 1] [-1 -1] [1 -1]])
-              (cycle [[1 1] [1 -1] [-1 -1] [-1 1]]))
-        [x y] (if (odd? r) [wy wx] [wx wy])]
-    (case [(pos? x) (pos? y)]
-      [true true] (map * [x y] (first (drop r rot)))
-      [true false] (map * [x y] (first (drop (+ 1 r) rot)))
-      [false false] (map * [x y] (first (drop (+ 2 r) rot)))
-      [false true] (map * [x y] (first (drop (+ 3 r) rot))))))
+  [orient degrees x y]
+  (let [angle (if (= :ccw orient) (- 360 degrees) degrees)]
+    (case angle
+      90 [y (- x)]
+      180 [(- x) (- y)]
+      270 [(- y) x]
+      [x y])))
 
 (defn waypoint-move
   [start inst]
