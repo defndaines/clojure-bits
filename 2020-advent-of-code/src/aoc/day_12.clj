@@ -2,6 +2,10 @@
   "--- Day 12: Rain Risk ---
   ...
   What is the Manhattan distance between that location and the ship's starting
+  position?
+  --- Part Two ---
+  ...
+  What is the Manhattan distance between that location and the ship's starting
   position?")
 
 (defn manhattan-distance
@@ -38,3 +42,30 @@
       "L" [(rotate ccw v dir) [x y]]
       "R" [(rotate cw v dir) [x y]]
       "F" (forward dir x y v))))
+
+(defn rotate-waypoint
+  [orient degrees wx wy]
+  (let [r (/ degrees 90)
+        rot (if (= :ccw orient)
+              (cycle [[1 1] [-1 1] [-1 -1] [1 -1]])
+              (cycle [[1 1] [1 -1] [-1 -1] [-1 1]]))
+        [x y] (if (odd? r) [wy wx] [wx wy])]
+    (case [(pos? x) (pos? y)]
+      [true true] (map * [x y] (first (drop r rot)))
+      [true false] (map * [x y] (first (drop (+ 1 r) rot)))
+      [false false] (map * [x y] (first (drop (+ 2 r) rot)))
+      [false true] (map * [x y] (first (drop (+ 3 r) rot))))))
+
+(defn waypoint-move
+  [start inst]
+  (let [[[x y] [wx wy]] start
+        [_ cmd i] (re-find #"^([EFLNRSW])(\d+)$" inst)
+        v (Integer/parseInt i)]
+    (case cmd
+      "N" [[x y] [wx (+ wy v)]]
+      "S" [[x y] [wx (- wy v)]]
+      "E" [[x y] [(+ wx v) wy]]
+      "W" [[x y] [(- wx v) wy]]
+      "L" [[x y] (rotate-waypoint :ccw v wx wy)]
+      "R" [[x y] (rotate-waypoint :cw v wx wy)]
+      "F" [[(+ x (* v wx)) (+ y (* v wy))] [wx wy]])))
