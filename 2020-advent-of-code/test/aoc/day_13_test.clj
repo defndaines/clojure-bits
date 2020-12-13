@@ -23,3 +23,14 @@
           sched (last input)
           [bus ts] (day-13/next-bus sched start)]
       (is (= 171 (* bus (- ts start)))))))
+
+(deftest find-schedule-test
+  (testing "find starting timestamp of scheduling sequence."
+    (is (= 3417 (day-13/find-schedule "17,x,13,19")))
+    ; (is (= 754018 (day-13/find-schedule "67,7,59,61")))
+    ; (is (= 779210 (day-13/find-schedule "67,x,7,59,61")))
+    ; (is (= 1068781 (day-13/find-schedule "7,13,x,x,59,x,31,19")))
+    ; (is (= 1261476 (day-13/find-schedule "67,7,x,59,61")))
+    ; (is (= 1202161486 (day-13/find-schedule "1789,37,47,1889")))
+    ; (is (= 3417 (day-13/find-schedule (last input))))
+    ))
