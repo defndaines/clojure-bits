@@ -33,11 +33,10 @@
                   (tick buses (inc ts)))))
 
 (defn- bus-schedule
-  [sched]
-  (tick (parse-buses sched) 0))
+  [sched start]
+  (tick (parse-buses sched) start))
 
-(defn- window-pred
-  [sched]
+(defn- window-pred [sched]
   (map
     (fn [e]
       (if (= "x" e)
@@ -50,14 +49,16 @@
   "Find the first timestamp which matches the provided scheduling sequence."
   [sched]
   (let [jump (Integer/parseInt (first (string/split sched #",")))
-        window? (window-pred sched)]
-    (->> (bus-schedule sched)
-         (partition (count window?) jump)
+        skip-fn (fn skipper [n] (lazy-seq (cons n (skipper (+ jump n)))))
+        window? (window-pred sched)
+        window-size (count window?)]
+    (->> (skip-fn 0)
          (drop-while
-           (fn [batch]
+           (fn [ts]
              (not-every?
                identity
-               (map (fn [f x] (f (second x))) window? batch))))
-         first
-         first
+               (map
+                 (fn [f x] (f (second x)))
+                 window?
+                 (take window-size (bus-schedule sched ts))))))
          first)))
