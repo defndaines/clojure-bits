@@ -11,3 +11,25 @@
     (Long/parseUnsignedLong
       (apply str (map (fn [b m] (if (= \X m) b m)) nb mask))
       2)))
+
+(defn- parse-line
+  [line]
+  (let [[_ mask] (re-find #"^mask = ([X10]+)$" line)]
+    (if (seq mask)
+      [:mask mask]
+      (let [[_ loc n] (re-find #"^mem\[(\d+)] = (\d+)$" line)]
+        [:update (Integer/parseInt loc) (Long/parseLong n)]))))
+
+(defn run-program
+  [prog]
+  (dissoc
+    (reduce
+      (fn [acc e]
+        (let [line (parse-line e)]
+          (case (first line)
+            :mask (assoc acc :mask (second line))
+            :update (let [[_ loc n] line]
+                      (assoc acc loc (apply-mask n (:mask acc)))))))
+      {}
+      prog)
+    :mask))
