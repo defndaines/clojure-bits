@@ -31,3 +31,51 @@
   (testing "scanning error rate is sum of invalid fields."
     (is (= 71 (day-16/scanning-error-rate sample-notes)))
     (is (= 25961 (day-16/scanning-error-rate input)))))
+
+(def part-two-sample
+  ["class: 0-1 or 4-19"
+   "row: 0-5 or 8-19"
+   "seat: 0-13 or 16-19"
+   ""
+   "your ticket:"
+   "11,12,13"
+   ""
+   "nearby tickets:"
+   "3,9,18"
+   "15,1,5"
+   "5,14,9"])
+
+(deftest identify-fields-test
+  (testing "able to identify fields on input."
+    (is (= {"row" 0
+            "class" 1
+            "seat" 2}
+           (day-16/identify-fields part-two-sample)))
+    (is (= {"arrival station" 10
+            "arrival location" 15
+            "arrival platform" 9
+            "arrival track" 7
+            "class" 6
+            "departure date" 17
+            "departure location" 16
+            "departure platform" 1
+            "departure station" 2
+            "departure time" 13
+            "departure track" 5
+            "duration" 18
+            "price" 14
+            "route" 3
+            "row" 4
+            "seat" 8
+            "train" 11
+            "type" 0
+            "wagon" 12
+            "zone" 19}
+           (day-16/identify-fields input)))))
+
+(deftest departure-values-test
+  (testing "sum of values associated with departure fields."
+    (let [ticket (day-16/my-ticket input)
+          fields (day-16/identify-fields input)
+          departures (vals (filter #(string/starts-with? (first %) "departure") fields))]
+      (is (= 603409823791 (reduce * (vals (select-keys ticket departures))))))))
