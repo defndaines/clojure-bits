@@ -19,6 +19,7 @@
     (is (= 0 (day-15/game sample-input 8)))
     (is (= 4 (day-15/game sample-input 9)))
     (is (= 0 (day-15/game sample-input 10)))
+
     (is (= 436 (day-15/game sample-input 2020)))
     (is (= 1 (day-15/game [1 3 2] 2020)))
     (is (= 10 (day-15/game [2 1 3] 2020)))
@@ -26,4 +27,8 @@
     (is (= 78 (day-15/game [2 3 1] 2020)))
     (is (= 438 (day-15/game [3 2 1] 2020)))
     (is (= 1836 (day-15/game [3 1 2] 2020)))
-    (is (= 1025 (day-15/game input 2020)))))
+
+    (is (= 1025 (day-15/game input 2020)))
+
+    #_(is (= 175594 (day-15/game sample-input 30000000)))
+    #_(is (= 129262 (day-15/game input 30000000)))))

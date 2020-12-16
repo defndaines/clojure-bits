@@ -1,7 +1,10 @@
 (ns aoc.day-15
   "--- Day 15: Rambunctious Recitation ---
   ...
-  Given your starting numbers, what will be the 2020th number spoken?")
+  Given your starting numbers, what will be the 2020th number spoken?
+  --- Part Two ---
+  ...
+  Given your starting numbers, what will be the 30000000th number spoken?")
 
 (defn game
   [seed round]
@@ -18,4 +21,3 @@
             (recur (update acc 0 conj cnt) input (inc cnt) 0)
             (let [d (- a b)]
               (recur (update acc d conj cnt) input (inc cnt) d))))))))
-
