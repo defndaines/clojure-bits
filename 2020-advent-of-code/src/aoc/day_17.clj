@@ -11,3 +11,32 @@
             (map-indexed
               (fn [ix y] (map-indexed (fn [iy ch] {[ix iy 0] ch}) y))
               input))))
+
+(defn active [cube]
+  (count (filter #(= \# %) (vals cube))))
+
+(def neighbors
+  (filter #(not= [0 0 0] %)
+          (for [x [-1 0 1] y [-1 0 1] z [-1 0 1]]
+            [x y z])))
+
+(defn- get-neighbors
+  [pos]
+  (map #(mapv + pos %) neighbors))
+
+(defn- update-state
+  [cube pos]
+  (let [current-state (get cube pos)
+        active-neighbors (count
+                           (filter #(= \# (get cube %)) (get-neighbors pos)))]
+    (cond
+      (and (not= \# current-state) (= 3 active-neighbors)) \#
+      (and (= \# current-state) (< 1 active-neighbors 4)) \#
+      :else \.)))
+
+(defn round [cube]
+  (let [all-neighbors (distinct (mapcat get-neighbors (keys cube)))]
+    (into {} (map (fn [pos] [pos (update-state cube pos)]) all-neighbors))))
+
+(defn game [cube]
+  (lazy-seq (cons cube (game (round cube)))))
