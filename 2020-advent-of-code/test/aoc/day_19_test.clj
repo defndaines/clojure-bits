@@ -63,9 +63,73 @@
       (is (not (re-find rule-0 "aaabbb")))
       (is (not (re-find rule-0 "aaaabbb"))))))
 
-(deftest day-one-test
+; Disabling, since changes to input will cause this to fail.
+#_(deftest day-one-test
   (testing "count of matching messages."
     (let [rules (take-while #(not= "" %) input)
           rule-0 (day-19/regex-of rules "0")
           messages (rest (drop-while #(not= "" %) input))]
       (is (= 272 (count (filter #(re-find rule-0 %) messages)))))))
+
+(def looping-rules
+  ["0: 8 11"
+   "1: \"a\""
+   "2: 1 24 | 14 4"
+   "3: 5 14 | 16 1"
+   "4: 1 1"
+   "5: 1 14 | 15 1"
+   "6: 14 14 | 1 14"
+   "7: 14 5 | 1 21"
+   "8: 42 | 42 8"
+   "9: 14 27 | 1 26"
+   "10: 23 14 | 28 1"
+   "11: 42 31 | 42 11 31"
+   "12: 24 14 | 19 1"
+   "13: 14 3 | 1 12"
+   "14: \"b\""
+   "15: 1 | 14"
+   "16: 15 1 | 14 14"
+   "17: 14 2 | 1 7"
+   "18: 15 15"
+   "19: 14 1 | 14 14"
+   "20: 14 14 | 1 15"
+   "21: 14 1 | 1 14"
+   "22: 14 14"
+   "23: 25 1 | 22 14"
+   "24: 14 1"
+   "25: 1 1 | 1 14"
+   "26: 14 22 | 1 20"
+   "27: 1 6 | 14 18"
+   "28: 16 1"
+   "31: 14 17 | 1 13"
+   "42: 9 14 | 10 1"])
+
+(def looping-messages
+  ["abbbbbabbbaaaababbaabbbbabababbbabbbbbbabaaaa"
+   "bbabbbbaabaabba"
+   "babbbbaabbbbbabbbbbbaabaaabaaa"
+   "aaabbbbbbaaaabaababaabababbabaaabbababababaaa"
+   "bbbbbbbaaaabbbbaaabbabaaa"
+   "bbbababbbbaaaaaaaabbababaaababaabab"
+   "ababaaaaaabaaab"
+   "ababaaaaabbbaba"
+   "baabbaaaabbaaaababbaababb"
+   "abbbbabbbbaaaababbbbbbaaaababb"
+   "aaaaabbaabaaaaababaa"
+   "aaaabbaaaabbaaa"
+   "aaaabbaabbaaaaaaabbbabbbaaabbaabaaa"
+   "babaaabbbaaabaababbaabababaaab"
+   "aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"])
+
+(deftest day-two-test
+  (testing "sample looping data."
+    (let [rule-0 (day-19/regex-of looping-rules "0")]
+      (is (= 12
+             (count (filter #(re-find rule-0 %) looping-messages))))))
+
+  (testing "count of matching messages."
+    (let [rules (take-while #(not= "" %) input)
+          rule-0 (day-19/regex-of rules "0")
+          messages (rest (drop-while #(not= "" %) input))]
+      ; < 365 x 375 ; != 370
+      (is (= 366 (count (filter #(re-find rule-0 %) messages)))))))
