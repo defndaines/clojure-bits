@@ -2,7 +2,11 @@
   "--- Day 18: Operation Order ---
   ...
   Evaluate the expression on each line of the homework; what is the sum of the
-  resulting values?"
+  resulting values?
+  --- Part Two ---
+  ...
+  What do you get if you add up the results of evaluating the homework
+  problems using these new rules?"
   (:require [clojure.string :as string]))
 
 (declare math)
@@ -27,3 +31,22 @@
           (if (nil? f)
             (recur i f (rest bits))
             (recur (f i acc) nil (rest bits))))))))
+
+(declare math')
+
+(defn- sub'
+  [expr]
+  (if-let [match (re-find #"\(([^()]+)\)" expr)]
+    (sub' (string/replace expr (first match) (str (math' (second match)))))
+    expr))
+
+(defn math-+
+  [expr]
+  (if-let [match (re-find #"(\d+) \+ (\d+)")]
+    (let [sum (+ (Integer/parseInt (nth match 1)) (Integer/parseInt (nth match 2)))]
+      (math' (string/replace expr (first match) (str sum))))
+    expr))
+
+(defn plus-precedence
+  [expr]
+  )

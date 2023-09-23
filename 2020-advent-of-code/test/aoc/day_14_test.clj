@@ -27,3 +27,7 @@
            (day-14/run-program sample-data)))
     (is (= 165 (reduce + (vals (day-14/run-program sample-data)))))
     (is (= 12135523360904 (reduce + (vals (day-14/run-program input)))))))
+
+; (deftest part-two-test
+  ; (testing "I have no idea."
+    ; (is (= "000000000000000000000000000000X1101X" (day-14/part-two )))))

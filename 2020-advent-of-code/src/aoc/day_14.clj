@@ -2,7 +2,10 @@
   "--- Day 14: Docking Data ---
   ...
   Execute the initialization program. What is the sum of all values left in
-  memory after it completes?")
+  memory after it completes?
+  --- Part Two ---
+  ...
+  What is the sum of all values left in memory after it completes?")
 
 (defn apply-mask
   [n mask]

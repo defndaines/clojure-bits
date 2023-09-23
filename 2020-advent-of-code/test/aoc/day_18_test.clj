@@ -15,3 +15,12 @@
     (is (= 12240 (day-18/math "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))")))
     (is (= 13632 (day-18/math "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2")))
     (is (= 4696493914530 (reduce + (map day-18/math input))))))
+
+(deftest plus-precedence-test
+  (testing "math with plus taking precedence over multiplication."
+    (is (= 51 (day-18/plus-precedence "1 + (2 * 3) + (4 * (5 + 6))")))
+    (is (= 46 (day-18/plus-precedence "2 * 3 + (4 * 5)")))
+    (is (= 1445 (day-18/plus-precedence "5 + (8 * 3 + 9 + 3 * 4 * 3)")))
+    (is (= 669060 (day-18/plus-precedence "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))")))
+    (is (= 23340 (day-18/plus-precedence "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2")))
+    ))
